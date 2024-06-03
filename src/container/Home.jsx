@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { RiEmotionHappyLine, RiEmotionUnhappyLine } from "react-icons/ri";
 import {motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import {Logo} from "../assets";
 
 const Home = () => {
   const [isSideMenu, setIsSideMenu] = useState(false);
@@ -21,7 +23,9 @@ const Home = () => {
         </motion.div>
       <div className="overflow-hidden w-full flex flex-col gap-4  ">
         {/* logo */}
-
+        <Link to={"/home"}>
+            <img src={Logo} alt="logo" className="object-contain w-72 h-auto" />
+        </Link>
         
         {/* start coding */}
 
