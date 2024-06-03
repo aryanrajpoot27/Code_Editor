@@ -10,6 +10,8 @@ module.exports = {
         secondary: "#1E1F26",
         primaryText: "#868CA0",
         text555: "#555",
+        customGreen:" rgb(234,255,150)",
+        cusGreen:" rgb(214,235,150)",
       },
     },
   },
