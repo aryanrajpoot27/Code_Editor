@@ -5,7 +5,7 @@ import { FaEnvelope, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
 import { motion } from "framer-motion";
-import { signInWithGoogle } from "../utils/Helpers";
+import { signInWithGithub, signInWithGoogle } from "../utils/Helpers";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -118,7 +118,7 @@ const SignUp = () => {
           </div>
 
           {/* github signin section  */}
-          <motion.div
+          <motion.div onClick={signInWithGithub}
             className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer  "
             whileTap={{ scale: 0.9 }}
           >

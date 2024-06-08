@@ -11,7 +11,7 @@ const App = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((userCred) => {
       if (userCred) {
-        console.log(userCred?.providerData[0].email);
+        console.log(userCred?.providerData[0]);
       } else {
         navigate("/home/auth" , {replace: true});
       }
