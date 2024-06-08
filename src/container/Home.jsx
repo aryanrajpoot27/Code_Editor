@@ -3,8 +3,10 @@ import { RiEmotionHappyLine, RiEmotionUnhappyLine } from "react-icons/ri";
 import { MdHome } from "react-icons/md";
 import { FaSearchengin } from "react-icons/fa6";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
 import { Logo } from "../assets";
+import {Projects, SignUp  } from "../container";
+
 
 const Home = () => {
   const [isSideMenu, setIsSideMenu] = useState(false);
@@ -76,6 +78,18 @@ const Home = () => {
             </motion.div>}
 
           {user && <div></div>}
+        </div>
+
+        {/* bottom section */}
+
+        <div className="w-full">
+            <Routes>
+          
+                <Route path="/*" element={<Projects />} />
+
+                <Route path="/auth" element={<SignUp />} />
+           
+            </Routes>
         </div>
       </div>
     </>
