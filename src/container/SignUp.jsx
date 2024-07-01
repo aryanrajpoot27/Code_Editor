@@ -4,7 +4,7 @@ import { UserAuthInput } from "../components";
 import { FaEnvelope, FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { signInWithGithub, signInWithGoogle } from "../utils/Helpers";
 import {
   createUserWithEmailAndPassword,
@@ -19,6 +19,8 @@ const SignUp = () => {
   const [getEmailValidationStatus, setGetEmailValidationStatus] =
     useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [alert, setAlert] = useState(false)
+  const [alertMsg, setAlertMsg] = useState("")
 
   const createNewUser = async () => {
     if (getEmailValidationStatus) {
@@ -46,7 +48,21 @@ const SignUp = () => {
         })
         .catch((err) => {
           console.log(err.message);
-        });
+          if (err.message.includes("user-not-found")){
+            setAlert(true)
+            setAlertMsg("User Not Found")
+          } 
+          else if (err.message.includes("wrong-password")){
+             setAlert(true)
+            setAlertMsg("Wrong Password");
+          } else {
+            setAlert(true)
+            setAlertMsg("Too much Login Attempts, Try Again Later 😕")
+          }
+          setInterval(() => {
+            setAlert(false);
+          }, 4000)
+        })
     }
   };
 
@@ -89,13 +105,15 @@ const SignUp = () => {
           />
           {/* alert section  */}
 
-          <motion.p
-            key={"Alert Message"}
+          <AnimatePresence>
+            {alert && (
+          <motion.p 
             {...fadeInOut}
             className="text-red-500 "
           >
-            Some Alert
-          </motion.p>
+            {alertMsg}
+          </motion.p>)}
+          </AnimatePresence>
 
           {/* login button */}
           {!isLogin ? (
