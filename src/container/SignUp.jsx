@@ -6,6 +6,12 @@ import { FcGoogle } from "react-icons/fc";
 import { MdPassword } from "react-icons/md";
 import { motion } from "framer-motion";
 import { signInWithGithub, signInWithGoogle } from "../utils/Helpers";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
+import { auth } from "../config/firebase.config";
+import { fadeInOut } from "../animations";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -13,6 +19,36 @@ const SignUp = () => {
   const [getEmailValidationStatus, setGetEmailValidationStatus] =
     useState(false);
   const [isLogin, setIsLogin] = useState(false);
+
+  const createNewUser = async () => {
+    if (getEmailValidationStatus) {
+      // create new user
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCred) => {
+          if (userCred) {
+            console.log(userCred);
+          }
+        })
+        .catch((err) => console.log(err));
+    } else {
+      // alert the user
+    }
+  };
+
+  const loginWithEmailAndPassword = async () => {
+    // login with email and password
+    if (getEmailValidationStatus) {
+      await signInWithEmailAndPassword(auth, email, password)
+        .then((userCred) => {
+          if (userCred) {
+            console.log(userCred);
+          }
+        })
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
+  };
 
   return (
     <div className="w-full py-6 ">
@@ -53,9 +89,18 @@ const SignUp = () => {
           />
           {/* alert section  */}
 
+          <motion.p
+            key={"Alert Message"}
+            {...fadeInOut}
+            className="text-red-500 "
+          >
+            Some Alert
+          </motion.p>
+
           {/* login button */}
           {!isLogin ? (
             <motion.div
+              onClick={createNewUser}
               whileTap={{ scale: 0.9 }}
               className="bg-customGreen px-6 py-2 rounded-md w-full flex items-center justify-center text-lg text-black cursor-pointer hover:bg-cusGreen"
             >
@@ -63,6 +108,7 @@ const SignUp = () => {
             </motion.div>
           ) : (
             <motion.div
+              onClick={loginWithEmailAndPassword}
               whileTap={{ scale: 0.9 }}
               className="bg-customGreen px-6 py-2 rounded-md text-lg text-black cursor-pointer w-full flex items-center justify-center hover:bg-cusGreen"
             >
@@ -102,7 +148,8 @@ const SignUp = () => {
           </div>
 
           {/*  signIn with google section  */}
-          <motion.div onClick={signInWithGoogle }
+          <motion.div
+            onClick={signInWithGoogle}
             className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer  "
             whileTap={{ scale: 0.9 }}
           >
@@ -118,15 +165,14 @@ const SignUp = () => {
           </div>
 
           {/* github signin section  */}
-          <motion.div onClick={signInWithGithub}
+          <motion.div
+            onClick={signInWithGithub}
             className="flex items-center justify-center gap-3 bg-[rgba(256,256,256,0.2)] backdrop-blur-md w-full py-3 rounded-xl hover:bg-[rgba(256,256,256,0.4)] cursor-pointer  "
             whileTap={{ scale: 0.9 }}
           >
             <FaGithub className="text-3xl text-white" />
             <p className="text-xl text-white ">Sign in with Github</p>
           </motion.div>
-
-
         </div>
       </div>
     </div>
