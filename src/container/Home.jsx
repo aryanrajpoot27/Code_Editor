@@ -6,11 +6,12 @@ import { motion } from "framer-motion";
 import { Link, Routes, Route } from "react-router-dom";
 import { Logo } from "../assets";
 import {Projects, SignUp  } from "../container";
+import { useSelector } from "react-redux";
 
 
 const Home = () => {
   const [isSideMenu, setIsSideMenu] = useState(false);
-  const [user, setuser] = useState(null);
+  const user = useSelector(state => state.user?.user);
 
   return (
     <>
